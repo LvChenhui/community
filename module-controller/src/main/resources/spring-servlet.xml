@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+    <context:property-placeholder location="classpath:antx.properties" />
+
+    <context:component-scan base-package="com.wl.lch" />
+
+    <context:annotation-config />
+
+    <mvc:annotation-driven />
+
+    <import resource="classpath*:spring-service.xml" />
+
+    <mvc:default-servlet-handler/>
+
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+        <!--<property name="defaultEncoding" value="UTF-8"/>-->
+        <!--<property name="maxUploadSize" value="104857600" />  &lt;!&ndash; 设置允许上传的最大文件大小，以字节为单位计算。当设为-1时表示无限制，默认是-1 &ndash;&gt;-->
+        <!--<property name="maxInMemorySize" value="4096" />   &lt;!&ndash; 设置在文件上传时允许写到内存中的最大值，以字节为单位计算，默认是10240 &ndash;&gt;-->
+    <!--</bean>-->
+
+
+</beans>

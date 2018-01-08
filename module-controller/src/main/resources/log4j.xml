@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration>
+    <!-- ===================================================================== -->
+    <!-- 以下是appender的定义 -->
+    <!-- ===================================================================== -->
+
+    <appender name="WEBCORE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/opt/tomcat/logs/community_core.log" />
+        <param name="Append" value="true" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%n%d %n%-5p %c{2} - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="WEBTRADE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/opt/tomcat/logs/community_trade.log" />
+        <param name="append" value="true" />
+        <param name="encoding" value="GBK" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%n%d %n%-5p %c{2}-%t - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="WEBCONTROLLER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="/opt/tomcat/logs/community_controller.log" />
+        <param name="append" value="true" />
+        <param name="encoding" value="GBK" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%n%d %n%-5p %c{2}-%t - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="CONSOLELOG" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- 设置日志输出的格式 -->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%-5p] [method:%l]%n%m%n%n" />
+        </layout>
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- 设置日志输出的最小级别 -->
+            <param name="levelMin" value="INFO" />
+            <!-- 设置日志输出的最大级别 -->
+            <param name="levelMax" value="ERROR" />
+            <!-- 设置日志输出的xxx，默认是false -->
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+
+
+
+    <!-- ===================================================================== -->
+    <!-- 以下是logger的定义 -->
+    <!-- ===================================================================== -->
+
+
+    <logger name="com.wl.lch.core" additivity="true">
+        <level value="info" />
+        <appender-ref ref="WEBCORE" />
+    </logger>
+    <logger name="com.wl.lch" additivity="true">
+        <level value="info" />
+        <appender-ref ref="WEBTRADE" />
+    </logger>
+    <logger name="com.wl.lch.controllor" additivity="true">
+        <level value="debug" />
+        <appender-ref ref="WEBCONTROLLER" />
+    </logger>
+
+    <!-- 调试的时候使用 <logger name="java.sql.Statement" additivity="false"> <level
+        value="debug" /> <appender-ref ref="CORE"/> </logger> <logger name="java.sql.PreparedStatement"
+        additivity="false"> <level value="debug" /> <appender-ref ref="CORE"/> </logger>
+        <logger name="java.sql.ResultSet" additivity="false"> <level value="debug"
+        /> <appender-ref ref="CORE"/> </logger> -->
+
+    <!-- ===================================================================== -->
+    <!-- Root logger的定义 -->
+    <!-- ===================================================================== -->
+    <root>
+        <level value="info" />
+        <appender-ref ref="CONSOLELOG" />
+    </root>
+</log4j:configuration>

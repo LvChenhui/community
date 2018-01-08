@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wl.lch.core.NubbinTalkMapper">
+  <resultMap id="BaseResultMap" type="com.wl.lch.entity.NubbinTalk">
+    <id column="talk_id" jdbcType="INTEGER" property="talkId" />
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="revise_time" jdbcType="TIMESTAMP" property="reviseTime" />
+    <result column="Fabulous" jdbcType="INTEGER" property="fabulous" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wl.lch.entity.NubbinTalk">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    talk_id, user_id, title, create_time, revise_time, Fabulous
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.wl.lch.entity.NubbinTalkKey" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_nubbin_talk
+    where talk_id = #{talkId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wl.lch.entity.NubbinTalkKey">
+    delete from community_nubbin_talk
+    where talk_id = #{talkId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wl.lch.entity.NubbinTalk">
+    insert into community_nubbin_talk (talk_id, user_id, title, 
+      create_time, revise_time, Fabulous, 
+      content)
+    values (#{talkId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{reviseTime,jdbcType=TIMESTAMP}, #{fabulous,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wl.lch.entity.NubbinTalk">
+    insert into community_nubbin_talk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="talkId != null">
+        talk_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="reviseTime != null">
+        revise_time,
+      </if>
+      <if test="fabulous != null">
+        Fabulous,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="talkId != null">
+        #{talkId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviseTime != null">
+        #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fabulous != null">
+        #{fabulous,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wl.lch.entity.NubbinTalk">
+    update community_nubbin_talk
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviseTime != null">
+        revise_time = #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fabulous != null">
+        Fabulous = #{fabulous,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where talk_id = #{talkId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wl.lch.entity.NubbinTalk">
+    update community_nubbin_talk
+    set title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      revise_time = #{reviseTime,jdbcType=TIMESTAMP},
+      Fabulous = #{fabulous,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where talk_id = #{talkId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wl.lch.entity.NubbinTalk">
+    update community_nubbin_talk
+    set title = #{title,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      revise_time = #{reviseTime,jdbcType=TIMESTAMP},
+      Fabulous = #{fabulous,jdbcType=INTEGER}
+    where talk_id = #{talkId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>
