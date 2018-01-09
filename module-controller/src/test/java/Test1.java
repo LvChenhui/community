@@ -12,4 +12,9 @@ public class Test1 {
         System.out.println(mapper.deleteByPrimaryKey(1));
 
     }
+
+    @Test
+    public void test2(){
+
+    }
 }
