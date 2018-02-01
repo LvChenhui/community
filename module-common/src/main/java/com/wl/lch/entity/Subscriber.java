@@ -1,13 +1,18 @@
 package com.wl.lch.entity;
 
-public class Subscriber {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Subscriber implements Serializable {
+    private static final long serialVersionUID = -610144376479444348L;
+
     private Integer id;
 
     private String account;
 
     private String password;
 
-    private String userid;
+    private String userId;
 
     private String name;
 
@@ -16,6 +21,16 @@ public class Subscriber {
     private String token;
 
     private Integer point;
+
+    private String gender;
+
+    private String imageUrl;
+
+    private Date createTime;
+
+    private Date reviseTime;
+
+    private String signature;
 
     public Integer getId() {
         return id;
@@ -41,12 +56,12 @@ public class Subscriber {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getName() {
@@ -79,5 +94,45 @@ public class Subscriber {
 
     public void setPoint(Integer point) {
         this.point = point;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl == null ? null : imageUrl.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getReviseTime() {
+        return reviseTime;
+    }
+
+    public void setReviseTime(Date reviseTime) {
+        this.reviseTime = reviseTime;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
     }
 }

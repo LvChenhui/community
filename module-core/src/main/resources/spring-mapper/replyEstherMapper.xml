@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wl.lch.core.ReplyEstherMapper">
+  <resultMap id="BaseResultMap" type="com.wl.lch.entity.ReplyEsther">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="init_time" jdbcType="TIMESTAMP" property="initTime" />
+    <result column="up" jdbcType="INTEGER" property="up" />
+    <result column="posts_id" jdbcType="INTEGER" property="postsId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wl.lch.entity.ReplyEsther">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, init_time, up, posts_id, user_id
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from community_reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wl.lch.entity.ReplyEsther">
+    insert into community_reply (id, init_time, up, 
+      posts_id, user_id, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{initTime,jdbcType=TIMESTAMP}, #{up,jdbcType=INTEGER}, 
+      #{postsId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wl.lch.entity.ReplyEsther">
+    insert into community_reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="initTime != null">
+        init_time,
+      </if>
+      <if test="up != null">
+        up,
+      </if>
+      <if test="postsId != null">
+        posts_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="initTime != null">
+        #{initTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="up != null">
+        #{up,jdbcType=INTEGER},
+      </if>
+      <if test="postsId != null">
+        #{postsId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wl.lch.entity.ReplyEsther">
+    update community_reply
+    <set>
+      <if test="initTime != null">
+        init_time = #{initTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="up != null">
+        up = #{up,jdbcType=INTEGER},
+      </if>
+      <if test="postsId != null">
+        posts_id = #{postsId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wl.lch.entity.ReplyEsther">
+    update community_reply
+    set init_time = #{initTime,jdbcType=TIMESTAMP},
+      up = #{up,jdbcType=INTEGER},
+      posts_id = #{postsId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wl.lch.entity.ReplyEsther">
+    update community_reply
+    set init_time = #{initTime,jdbcType=TIMESTAMP},
+      up = #{up,jdbcType=INTEGER},
+      posts_id = #{postsId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPostId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_reply
+    where posts_id = #{posts_id,jdbcType=INTEGER}
+    limit #{start,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
+  </select>
+</mapper>

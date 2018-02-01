@@ -13,6 +13,9 @@
         <mapper resource="spring-mapper/nubbinTalkMapper.xml" />
         <mapper resource="spring-mapper/subscriberDetailMapper.xml" />
         <mapper resource="spring-mapper/subscriberMapper.xml" />
+        <mapper resource="spring-mapper/labelMapper.xml" />
+        <mapper resource="spring-mapper/postEstherMapper.xml" />
+        <mapper resource="spring-mapper/replyEstherMapper.xml" />
 
     </mappers>
 </configuration>

@@ -3,6 +3,8 @@ package com.wl.lch.core;
 import com.wl.lch.entity.Subscriber;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SubscriberMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,4 +19,7 @@ public interface SubscriberMapper {
     int updateByPrimaryKey(Subscriber record);
 
     public Subscriber selectByAccount(@Param("account") String Account);
+
+    public Subscriber selectByName(@Param("name") String name);
+
 }

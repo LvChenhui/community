@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wl.lch.core.PostEstherMapper">
+  <resultMap id="BaseResultMap" type="com.wl.lch.entity.PostEsther">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="good" jdbcType="BIT" property="good" />
+    <result column="init_time" jdbcType="TIMESTAMP" property="initTime" />
+    <result column="label_id" jdbcType="INTEGER" property="labelId" />
+    <result column="reply_count" jdbcType="INTEGER" property="replyCount" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="top" jdbcType="BIT" property="top" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wl.lch.entity.PostEsther">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, good, init_time, label_id, reply_count, title, top, user_id
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from community_post
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wl.lch.entity.PostEsther">
+    insert into community_post (id, good, init_time, 
+      label_id, reply_count, title, 
+      top, user_id, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{good,jdbcType=BIT}, #{initTime,jdbcType=TIMESTAMP}, 
+      #{labelId,jdbcType=INTEGER}, #{replyCount,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{top,jdbcType=BIT}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wl.lch.entity.PostEsther">
+    insert into community_post
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="good != null">
+        good,
+      </if>
+      <if test="initTime != null">
+        init_time,
+      </if>
+      <if test="labelId != null">
+        label_id,
+      </if>
+      <if test="replyCount != null">
+        reply_count,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="top != null">
+        top,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="good != null">
+        #{good,jdbcType=BIT},
+      </if>
+      <if test="initTime != null">
+        #{initTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="labelId != null">
+        #{labelId,jdbcType=INTEGER},
+      </if>
+      <if test="replyCount != null">
+        #{replyCount,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null">
+        #{top,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wl.lch.entity.PostEsther">
+    update community_post
+    <set>
+      <if test="good != null">
+        good = #{good,jdbcType=BIT},
+      </if>
+      <if test="initTime != null">
+        init_time = #{initTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="labelId != null">
+        label_id = #{labelId,jdbcType=INTEGER},
+      </if>
+      <if test="replyCount != null">
+        reply_count = #{replyCount,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null">
+        top = #{top,jdbcType=BIT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wl.lch.entity.PostEsther">
+    update community_post
+    set good = #{good,jdbcType=BIT},
+      init_time = #{initTime,jdbcType=TIMESTAMP},
+      label_id = #{labelId,jdbcType=INTEGER},
+      reply_count = #{replyCount,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      top = #{top,jdbcType=BIT},
+      user_id = #{userId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wl.lch.entity.PostEsther">
+    update community_post
+    set good = #{good,jdbcType=BIT},
+      init_time = #{initTime,jdbcType=TIMESTAMP},
+      label_id = #{labelId,jdbcType=INTEGER},
+      reply_count = #{replyCount,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      top = #{top,jdbcType=BIT},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectLimit" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+    limit #{start,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+  </select>
+  <select id="sumPageSize" resultType="int">
+    select count(*) from community_post
+  </select>
+
+
+</mapper>

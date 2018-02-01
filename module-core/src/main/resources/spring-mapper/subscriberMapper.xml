@@ -5,18 +5,31 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="point" jdbcType="INTEGER" property="point" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="revise_time" jdbcType="TIMESTAMP" property="reviseTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wl.lch.entity.Subscriber">
+    <result column="signature" jdbcType="LONGVARCHAR" property="signature" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, account, password, userId, name, phone, token, point
+    id, account, password, user_id, name, phone, token, point, gender, image_url, create_time,
+    revise_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <sql id="Blob_Column_List">
+    signature
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from community_mi_user
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -25,12 +38,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wl.lch.entity.Subscriber">
-    insert into community_mi_user (id, account, password, 
-      userId, name, phone, 
-      token, point)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{userid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{token,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER})
+    insert into community_mi_user (id, account, password,
+    user_id, name, phone,
+    token, point, gender,
+    image_url, create_time, revise_time,
+    signature)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+    #{token,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{gender,jdbcType=VARCHAR},
+    #{imageUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{reviseTime,jdbcType=TIMESTAMP},
+    #{signature,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wl.lch.entity.Subscriber">
     insert into community_mi_user
@@ -44,8 +61,8 @@
       <if test="password != null">
         password,
       </if>
-      <if test="userid != null">
-        userId,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="name != null">
         name,
@@ -59,6 +76,21 @@
       <if test="point != null">
         point,
       </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="reviseTime != null">
+        revise_time,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,8 +102,8 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -85,6 +117,21 @@
       <if test="point != null">
         #{point,jdbcType=INTEGER},
       </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviseTime != null">
+        #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wl.lch.entity.Subscriber">
@@ -96,8 +143,8 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="userid != null">
-        userId = #{userid,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -111,18 +158,53 @@
       <if test="point != null">
         point = #{point,jdbcType=INTEGER},
       </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviseTime != null">
+        revise_time = #{reviseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wl.lch.entity.Subscriber">
+    update community_mi_user
+    set account = #{account,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    token = #{token,jdbcType=VARCHAR},
+    point = #{point,jdbcType=INTEGER},
+    gender = #{gender,jdbcType=VARCHAR},
+    image_url = #{imageUrl,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    revise_time = #{reviseTime,jdbcType=TIMESTAMP},
+    signature = #{signature,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wl.lch.entity.Subscriber">
     update community_mi_user
     set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      userId = #{userid,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      token = #{token,jdbcType=VARCHAR},
-      point = #{point,jdbcType=INTEGER}
+    password = #{password,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    token = #{token,jdbcType=VARCHAR},
+    point = #{point,jdbcType=INTEGER},
+    gender = #{gender,jdbcType=VARCHAR},
+    image_url = #{imageUrl,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    revise_time = #{reviseTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByAccount" parameterType="string" resultMap="BaseResultMap">
@@ -130,5 +212,11 @@
     <include refid="Base_Column_List" />
     from community_mi_user
     where account = #{account,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from community_mi_user
+    where name = #{name,jdbcType=VARCHAR}
   </select>
 </mapper>
