@@ -1,7 +1,10 @@
 package com.wl.lch.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RevertResult<T> implements Serializable {
 
     private static final long serialVersionUID = 7329218059481508496L;
@@ -75,6 +78,14 @@ public class RevertResult<T> implements Serializable {
         this.data = data;
     }
 
+    public RevertResult(int status, String msg, T data, int pageSize, int total) {
+        this.status = status;
+        this.msg = msg;
+        this.data = data;
+        this.pageSize = pageSize;
+        this.total = total;
+    }
+
     public static RevertResult ok() {
         return new RevertResult(StateEnum.SUCCESS.getState());
     }
@@ -91,6 +102,10 @@ public class RevertResult<T> implements Serializable {
         return new RevertResult(StateEnum.SUCCESS.getState(), msg, data);
     }
 
+    public static <T> RevertResult ok(String msg, T data, int pageSize, int total) {
+        return new RevertResult(StateEnum.SUCCESS.getState(), msg, data, pageSize, total);
+    }
+
     public static RevertResult warn() {
         return new RevertResult(StateEnum.WARN.getState());
     }
@@ -105,5 +120,16 @@ public class RevertResult<T> implements Serializable {
 
     public static RevertResult error(String msg) {
         return new RevertResult(StateEnum.ERROR.getState(), msg);
+    }
+
+    @Override
+    public String toString() {
+        return "RevertResult{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", pageSize=" + pageSize +
+                ", total=" + total +
+                '}';
     }
 }

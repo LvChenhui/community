@@ -19,7 +19,7 @@
                     {{# layui.each(d.data, function(index, item){ }}
                     <li class="fly-list-li">
                         <a href="../user/home?id={{item.user.id}}" class="fly-list-avatar">
-                            <img src="{{item.user.icon}}" alt="">
+                            <img src="{{item.user.imageUrl}}" alt="">
                         </a>
                         <h2 class="fly-tip">
                             <a href="../posts/detail?id={{item.id}}">{{item.title}}</a>
@@ -27,7 +27,7 @@
                             {{ item.good == true ? '<span class="fly-tip-jing">精帖</span>' : ''}}
                         </h2>
                         <p>
-                            <span><a href="../user/home?id={{item.user.id}}">{{item.user.username}}</a></span>
+                            <span><a href="../user/home?id={{item.user.id}}">{{item.user.name}}</a></span>
                             <span>{{item.initTime}}</span>
                             <span>{{item.label.name}}</span>
                             <span class="fly-list-hint">
@@ -60,13 +60,13 @@
     function loadPosts(laytpl, laypage, pageNo, renderpager) {
         var id = $.getUrlParam('id');
 
-        $.get(quark_label_posts_api + id, {
+        $.get(community_label_posts_api + id, {
             pageNo: pageNo,
             length: 15,
         }, function (data) {
 
             if (data.status == 500) {
-                layer.msg(data.error, {icon: 5});
+                layer.msg(data.msg, {icon: 5});
                 return;
             }
             var posts = $("#posts").html();

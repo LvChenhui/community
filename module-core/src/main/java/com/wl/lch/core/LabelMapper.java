@@ -1,6 +1,9 @@
 package com.wl.lch.core;
 
 import com.wl.lch.entity.Label;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LabelMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,7 @@ public interface LabelMapper {
     int updateByPrimaryKeySelective(Label record);
 
     int updateByPrimaryKey(Label record);
+
+    public List<Label> findLabels();
+
 }

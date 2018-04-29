@@ -125,6 +125,12 @@
     <include refid="Blob_Column_List" />
     from community_reply
     where posts_id = #{posts_id,jdbcType=INTEGER}
+    order by init_time
     limit #{start,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
+  </select>
+  <select id="sumReplyPageSize" resultType="int">
+    select count(*)
+    from community_reply
+    where posts_id = #{posts_id,jdbcType=INTEGER}
   </select>
 </mapper>

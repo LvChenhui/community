@@ -1,11 +1,13 @@
 package com.wl.lch.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wl.lch.entity.Label;
 import com.wl.lch.entity.Subscriber;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EstherDTO implements Serializable {
     private static final long serialVersionUID = -3517557916068106997L;
 
@@ -29,13 +31,13 @@ public class EstherDTO implements Serializable {
 
     private Label label;
 
-    private Subscriber user;
+    private UserDTO user;
 
-    public Subscriber getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(Subscriber user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

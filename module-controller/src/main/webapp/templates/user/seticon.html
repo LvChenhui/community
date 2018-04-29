@@ -32,7 +32,7 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="message.html">
+            <a th:href="@{/user/message}">
                 <i class="layui-icon">&#xe611;</i>
                 我的消息
             </a>
@@ -63,7 +63,7 @@
         //执行实例
         var uploadInst = upload.render({
             elem: '#updateico' //绑定元素
-            ,url: quark_upload_icon_api+getCookie() //上传接口
+            ,url: community_upload_icon_api+getCookie() //上传接口
             ,done: function(res){
                 //上传完毕回调
                 $("#img").attr('src',res.data);

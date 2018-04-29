@@ -22,4 +22,6 @@ public interface SubscriberMapper {
 
     public Subscriber selectByName(@Param("name") String name);
 
+    public List<Subscriber> selectNewUser();
+
 }

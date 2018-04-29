@@ -10,9 +10,9 @@
             <a class="nav-this" th:href="@{/label}">
                 <i class="iconfont icon-wenda"></i>标签
             </a>
-            <a class="nav-this" th:href="@{/chat}">
-                <i class="iconfont icon-wenda"></i>聊天室
-            </a>
+            <!--            <a class="nav-this" th:href="@{/chat}">
+                            <i class="iconfont icon-wenda"></i>聊天室
+                        </a>-->
         </div>
 
         <div class="nav-user">
@@ -29,13 +29,13 @@
 <script>
     //获取用户信息渲染页面
     var htm = "";
-    $.get(quark_getUser_api+ getCookie(),function (data) {
+    $.get(community_getUser_api+ getCookie(),function (data) {
         if (data.status == 200){
-            var count = data.data.messagecount;
+            var count = data.data.messageCount;
             if (count!=0){
                 htm+="<a class='nav-message' href='/community/user/message' title=''>"+count+"</a>";
             }
-            htm +="<a class='avatar' href='/user/home?id="+data.data.id+"'>"+
+            htm +="<a class='avatar' href='/community/user/home?id="+data.data.id+"'>"+
                 "<img src='"+data.data.imageUrl+"'>"+
                 "<cite>"+data.data.account+"</cite>"+
                 "</a>"+
@@ -44,10 +44,10 @@
                 "<a href='' onclick='logout()'><i class='iconfont icon-tuichu' style='top: 0; font-size: 22px;'></i>退了</a>"+
                 "</div>";
 
-            connectWebSocket(data.data.id);
+            // connectWebSocket(data.data.id);
         }else{
             htm ="<a class='unlogin' href='#'><i class='iconfont icon-touxiang'></i></a>"+
-                "<span><a href='/community/user/login'>登入</a><a href='/user/register'>注册</a></span>";
+                "<span><a href='/community/user/login'>登入</a><a href='/community/user/register'>注册</a></span>";
         }
 
         $(".nav-user").append(htm);
@@ -56,12 +56,12 @@
         //登出操作
         function logout() {
 
-            $.post(quark_logout_api,{
+            $.post(community_logout_api,{
                 token: getCookie()
             },function (obj) {
                if (obj.status == 200){
                    deleteCookie();
-                   location.href = "../index";
+                   location.href = "/community/index";
                }else{
                    layer.msg(obj.error,{icon:5});
                }
@@ -70,7 +70,7 @@
 
         //连接服务器webSocket操作
         function connectWebSocket(id) {
-            var socket = new SockJS(quark_webSocket_api, undefined, {protocols_whitelist: ['websocket']});
+            var socket = new SockJS(community_webSocket_api, undefined, {protocols_whitelist: ['websocket']});
             var stompClient  = Stomp.over(socket);
 
             //接收到广播推送

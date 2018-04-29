@@ -2,6 +2,9 @@ package com.wl.lch.controller;
 
 
 import com.wl.lch.domain.Resp;
+import com.wl.lch.dto.EstherDTO;
+import com.wl.lch.dto.UserEstherDetailDTO;
+import com.wl.lch.entity.PostEsther;
 import com.wl.lch.entity.Subscriber;
 import com.wl.lch.service.LoginService;
 import com.wl.lch.util.ResultProcessor;
@@ -15,6 +18,7 @@ import com.wl.lch.util.RevertResult;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,6 +33,7 @@ public class LoginController {
     @RequestMapping(value = "signIn", method = RequestMethod.POST)
     @ResponseBody
     public RevertResult<Object> signIn(String email, String password) {
+        logger.info("登录提示");
         String msg = loginService.signIn(email, password);
         if (Resp.SUCCESS.equals(msg)) {
             return RevertResult.ok(msg, loginService.sessionAccount(email));
@@ -61,6 +66,14 @@ public class LoginController {
         }
         return RevertResult.error();
     }
+
+    @RequestMapping(value = "detail/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public RevertResult getUserDetail(@PathVariable("userId") Integer userId){
+        UserEstherDetailDTO esthers = loginService.findUserDetail(userId);
+        return RevertResult.ok("success",esthers);
+    }
+
 
 
 

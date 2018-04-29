@@ -2,8 +2,12 @@ package com.wl.lch.controller;
 
 
 import com.wl.lch.domain.Resp;
+import com.wl.lch.dto.UserDTO;
 import com.wl.lch.entity.Subscriber;
 import com.wl.lch.service.LoginService;
+import com.wl.lch.service.NotificationService;
+import com.wl.lch.service.PostService;
+import com.wl.lch.service.ReplyService;
 import com.wl.lch.util.RedisUtil;
 import com.wl.lch.util.RevertResult;
 import org.apache.commons.lang.StringUtils;
@@ -24,18 +28,26 @@ public class MessageController {
     @Resource
     private LoginService loginService;
 
+    @Resource
+    private PostService postService;
+
+    @Resource
+    private NotificationService notificationService;
+
     @RequestMapping(value = "{token}", method = RequestMethod.GET)
     @ResponseBody
     public RevertResult<Object> getUserByToken(@PathVariable("token") String token) {
         if (StringUtils.isEmpty(token)) {
-            return RevertResult.warn("token不存在，请重新登录");
+            return RevertResult.warn("token不存在，请重新登录！");
         }
         String accountNumber = loginService.checkSession(token);
-        if (StringUtils.isNotEmpty(accountNumber)) {
-            Subscriber subscriber = loginService.findSubscriberDeatail(accountNumber);
-            return RevertResult.ok(subscriber);
+        if (StringUtils.isEmpty(accountNumber)) {
+            return RevertResult.warn("session过期，请重新登录！");
         }
-        return RevertResult.warn("session过期");
+        Subscriber subscriber = loginService.findSubscriberDeatail(accountNumber);
+        UserDTO user = postService.getUserDTO(subscriber);
+        user.setMessageCount(notificationService.messageCount(accountNumber));
+        return RevertResult.ok(user);
     }
 
     @RequestMapping(value = "updateUser/{token}", method = RequestMethod.PUT)

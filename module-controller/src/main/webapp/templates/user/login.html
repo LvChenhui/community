@@ -65,7 +65,7 @@
 
         form.on('submit(*)', function (data) {
 
-            $.post(quark_login_api, data.field,
+            $.post(community_login_api, data.field,
                 function (data) {
                     if (data.status == 200) {
                         //设置Cookie

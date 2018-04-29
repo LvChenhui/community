@@ -1,19 +1,26 @@
 package com.wl.lch.service.impl;
 
+import com.wl.lch.core.LabelMapper;
+import com.wl.lch.core.PostEstherMapper;
 import com.wl.lch.core.SubscriberMapper;
 import com.wl.lch.domain.EncryptCode;
 import com.wl.lch.domain.Resp;
+import com.wl.lch.dto.EstherDTO;
+import com.wl.lch.dto.UserEstherDetailDTO;
+import com.wl.lch.entity.PostEsther;
 import com.wl.lch.entity.Subscriber;
 import com.wl.lch.service.LoginService;
+import com.wl.lch.service.PostService;
 import com.wl.lch.util.RedisUtil;
 import com.wl.lch.util.StringEncryptUtil;
-import com.wl.lch.util.VerificationCodeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 @Service("loginService")
@@ -23,6 +30,15 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private SubscriberMapper subscriberMapper;
+
+    @Resource
+    private LabelMapper labelMapper;
+
+    @Resource
+    private PostEstherMapper postEstherMapper;
+
+    @Resource
+    private PostService postService;
 
     @Override
     public String signOut(String token) {
@@ -63,6 +79,7 @@ public class LoginServiceImpl implements LoginService {
             subsciber.setAccount(accountNumber);
             subsciber.setName(name);
             subsciber.setPassword(StringEncryptUtil.encryptStr(password, EncryptCode.PWDECODE));
+            subsciber.setCreateTime(Calendar.getInstance().getTime());
             int num = subscriberMapper.insertSelective(subsciber);
             if (num == 1) {
                 return Resp.SUCCESS;
@@ -138,10 +155,27 @@ public class LoginServiceImpl implements LoginService {
         if (subscriber != null) {
             subscriber.setImageUrl(icon);
             int num = subscriberMapper.updateByPrimaryKeySelective(subscriber);
-            if(num == 1){
+            if (num == 1) {
                 return Resp.SUCCESS;
             }
         }
         return Resp.FAIL;
     }
+
+    @Override
+    public UserEstherDetailDTO findUserDetail(int userId) {
+        Subscriber subscriber = subscriberMapper.selectByPrimaryKey(userId);
+        List<PostEsther> postEsthers = postEstherMapper.findPostByUserId(userId);
+        UserEstherDetailDTO userEsther = new UserEstherDetailDTO();
+        List<EstherDTO> esthers = new ArrayList<>();
+        for (PostEsther postEsther : postEsthers) {
+            EstherDTO esther = postService.getEstherDTO(postEsther);
+            esthers.add(esther);
+        }
+        userEsther.setPosts(esthers);
+        userEsther.setUser(postService.getUserDTO(subscriber));
+        return userEsther;
+    }
+
+
 }

@@ -36,7 +36,7 @@
                         <label class="layui-form-label">标签选择框</label>
                         <div class="layui-input-block">
                             <div class="layui-input-inline">
-                                <select name="modules" lay-verify="required" lay-search="" id="label_select" name="labelId">
+                                <select lay-verify="required" lay-search="" id="label_select" name="labelId">
                                     <option value="">直接选择或搜索选择</option>
 
                                 </select>
@@ -59,7 +59,7 @@
 <!--<script th:src="@{/js/quark_api.js}"></script>-->
 <script>
     //添加option
-    $.get(quark_label_getall_api, function (data) {
+    $.get(community_label_getall_api, function (data) {
         var htm = "";
         if (data.status == 200) {
             for (var i = 0; i < data.data.length; i++) {
@@ -73,14 +73,13 @@
     });
 
     layui.use(['form', 'layedit'], function () {
-
         var form = layui.form,
             layedit = layui.layedit,
             layer = layui.layer;
 
         layedit.set({
             uploadImage: {
-                url: quark_upload_api,
+                url: community_upload_api,
                 type: 'post' //默认post
             }
         });
@@ -93,7 +92,7 @@
                 layer.msg("输入的内容不能为空",{icon:7});
                 return false;
             }
-            $.post(quark_posts_add_api, {
+            $.post(community_posts_add_api, {
                     title: data.field.title,
                     content:layedit.getContent(content),
                     labelId:data.field.labelId,
@@ -105,12 +104,12 @@
                             icon: 1,
                             time: 1000 //1秒关闭
                         }, function(){
-                            location.href = "/index";
+                            location.href = "../index";
                         });
                     } else if (data.status == 400) {
-                        layer.msg(data.error, {icon: 7});
+                        layer.msg(data.msg, {icon: 7});
                     } else {
-                        layer.msg(data.error, {icon: 5});
+                        layer.msg(data.msg, {icon: 5});
                     }
                 }, "json");
 

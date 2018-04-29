@@ -16,6 +16,7 @@
         <mapper resource="spring-mapper/labelMapper.xml" />
         <mapper resource="spring-mapper/postEstherMapper.xml" />
         <mapper resource="spring-mapper/replyEstherMapper.xml" />
+        <mapper resource="spring-mapper/notificationMapper.xml" />
 
     </mappers>
 </configuration>

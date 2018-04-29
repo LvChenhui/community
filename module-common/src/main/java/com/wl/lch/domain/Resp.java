@@ -14,9 +14,15 @@ public class Resp {
 
     public static final String PWDERROR = "passwordError";
 
+    public static final String TOP = "top";
+
+    public static final String GOOD = "good";
+
     public static final String SESSIONACCOUNT = "accountNumber";
 
     public static final String UPLOAD_PATH = "D:\\community\\images\\upload\\";
 
     public static final String STATIC_URL ="http://localhost:8080/community/image/getImage/";
+
+
 }

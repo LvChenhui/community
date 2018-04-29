@@ -1,10 +1,12 @@
 package com.wl.lch.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wl.lch.entity.Subscriber;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReplyDTO implements Serializable {
     private static final long serialVersionUID = 3663389085325321169L;
 
@@ -16,7 +18,7 @@ public class ReplyDTO implements Serializable {
 
     private String content;
 
-    private Subscriber user;
+    private UserDTO user;
 
     public Integer getId() {
         return id;
@@ -50,11 +52,11 @@ public class ReplyDTO implements Serializable {
         this.content = content;
     }
 
-    public Subscriber getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(Subscriber user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 }

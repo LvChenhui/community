@@ -79,4 +79,9 @@
       posts_count = #{postsCount,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findLabels" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from community_label
+  </select>
 </mapper>

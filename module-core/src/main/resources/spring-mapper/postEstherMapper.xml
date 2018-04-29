@@ -162,6 +162,18 @@
     ,
     <include refid="Blob_Column_List" />
     from community_post
+    <where>
+      <if test="top != null">
+        top = #{top,jdbcType=BIT}
+      </if>
+      <if test="good != null">
+        and good = #{good,jdbcType=BIT}
+      </if>
+      <if test="search != null">
+        and title like concat('%',#{search,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+    order by init_time DESC
     limit #{start,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="ResultMapWithBLOBs">
@@ -173,7 +185,49 @@
   </select>
   <select id="sumPageSize" resultType="int">
     select count(*) from community_post
+    <where>
+      <if test="top != null">
+        top = #{top,jdbcType=BIT}
+      </if>
+      <if test="good != null">
+        and good = #{good,jdbcType=BIT}
+      </if>
+      <if test="search != null">
+        and title like concat('%',#{search,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
   </select>
-
-
+  <select id="findPostByLabel" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+    where label_id = #{labelId,jdbcType=INTEGER}
+    limit #{start,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
+  </select>
+  <select id="sumPageSizeByLabel" resultType="int">
+    select count(*) from community_post
+    where label_id = #{labelId,jdbcType=INTEGER}
+  </select>
+  <select id="findPostByUserId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+    where user_id = #{userId,jdbcType=INTEGER}
+    order by init_time DESC
+    limit 0,10
+  </select>
+  <select id="findTopPost" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from community_post
+    WHERE DATE_FORMAT(init_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    order by init_time DESC
+    limit 0,15
+  </select>
 </mapper>

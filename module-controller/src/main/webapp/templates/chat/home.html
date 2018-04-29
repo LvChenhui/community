@@ -55,7 +55,7 @@
             window.WebSocket = window.MozWebSocket;
         }
         if (window.WebSocket) {
-            window.socket = new WebSocket(quark_chat_webSocket_api);
+            window.socket = new WebSocket(community_chat_webSocket_api);
             window.socket.onmessage = function (event) {
                 var data = eval("(" + event.data + ")");
                 console.log("onmessage data:" + JSON.stringify(data));

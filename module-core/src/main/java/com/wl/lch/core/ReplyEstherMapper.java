@@ -20,5 +20,7 @@ public interface ReplyEstherMapper {
 
     int updateByPrimaryKey(ReplyEsther record);
 
-    public List<ReplyEsther> selectByPostId(@Param("posts_id") Integer posts_id,@Param("start") Integer start,@Param("number") Integer number);
+    public List<ReplyEsther> selectByPostId(@Param("posts_id") Integer postsId,@Param("start") Integer start,@Param("number") Integer number);
+
+    public int sumReplyPageSize(@Param("posts_id") Integer postsId);
 }

@@ -39,13 +39,13 @@
 <script type="text/javascript">
 
    function tolabelDetaiail(data) {
-       location.href = "/label/detail?id="+data;
+       location.href = "label/detail?id="+data;
    }
 
     layui.use(['laytpl'], function () {
         var laytpl = layui.laytpl;
 
-        $.get(quark_label_getall_api, function (data) {
+        $.get(community_label_getall_api, function (data) {
             var label = $("#label").html();
             laytpl(label).render(data, function (html) {
                 $("#labels").html(html);

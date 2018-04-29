@@ -32,7 +32,7 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="message.html">
+            <a th:href="@{/user/message}">
                 <i class="layui-icon">&#xe611;</i>
                 我的消息
             </a>
@@ -93,7 +93,7 @@
             }
 
             $.ajax({
-                url:quark_user_update_psd_api+token,
+                url:community_user_update_psd_api+token,
                 type:'PUT',
                 data:{
                     newpsd:newpsd,

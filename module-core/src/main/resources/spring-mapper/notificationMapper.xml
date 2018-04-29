@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wl.lch.core.NotificationMapper">
+  <resultMap id="BaseResultMap" type="com.wl.lch.entity.Notification">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="is_read" jdbcType="BIT" property="isRead" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="posts_id" jdbcType="INTEGER" property="postsId" />
+    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <result column="init_time" jdbcType="TIMESTAMP" property="initTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, is_read, from_user_id, posts_id, to_user_id, init_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from community_notification
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from community_notification
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wl.lch.entity.Notification">
+    insert into community_notification (id, is_read, from_user_id, 
+      posts_id, to_user_id, init_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{isRead,jdbcType=BIT}, #{fromUserId,jdbcType=INTEGER}, 
+      #{postsId,jdbcType=INTEGER}, #{toUserId,jdbcType=INTEGER}, #{initTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wl.lch.entity.Notification">
+    insert into community_notification
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+      <if test="fromUserId != null">
+        from_user_id,
+      </if>
+      <if test="postsId != null">
+        posts_id,
+      </if>
+      <if test="toUserId != null">
+        to_user_id,
+      </if>
+      <if test="initTime != null">
+        init_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=BIT},
+      </if>
+      <if test="fromUserId != null">
+        #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="postsId != null">
+        #{postsId,jdbcType=INTEGER},
+      </if>
+      <if test="toUserId != null">
+        #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="initTime != null">
+        #{initTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wl.lch.entity.Notification">
+    update community_notification
+    <set>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=BIT},
+      </if>
+      <if test="fromUserId != null">
+        from_user_id = #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="postsId != null">
+        posts_id = #{postsId,jdbcType=INTEGER},
+      </if>
+      <if test="toUserId != null">
+        to_user_id = #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="initTime != null">
+        init_time = #{initTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wl.lch.entity.Notification">
+    update community_notification
+    set is_read = #{isRead,jdbcType=BIT},
+      from_user_id = #{fromUserId,jdbcType=INTEGER},
+      posts_id = #{postsId,jdbcType=INTEGER},
+      to_user_id = #{toUserId,jdbcType=INTEGER},
+      init_time = #{initTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectMessageCount" parameterType="java.lang.Integer" resultType="int">
+    select
+    count(*)
+    from community_notification
+    where to_user_id = #{toUserId,jdbcType=INTEGER}
+    and is_read = 0
+  </select>
+  <select id="selectByToUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from community_notification
+    where to_user_id = #{toUserId,jdbcType=INTEGER}
+    and is_read = 0
+  </select>
+  <update id="updateByToUserId" parameterType="int">
+    update community_notification
+    set is_read = 1
+    where to_user_id = #{toUserId,jdbcType=INTEGER}
+  </update>
+</mapper>

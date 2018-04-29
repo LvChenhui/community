@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Java Quark 社区</title>
+    <title>Code 社区</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
@@ -20,7 +20,7 @@
            <a href="index?type=good">精品帖</a>
            <a href="index?type=top">置顶帖</a>
         </span>
-                <form action="/index" method="get" class="fly-search">
+                <form action="index" method="get" class="fly-search">
                     <i class="iconfont icon-sousuo"></i>
                     <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text"
                            name="search">
@@ -67,9 +67,9 @@
                 <script id="user" type="text/html">
                     {{# layui.each(d.data, function(index, item){ }}
                 <dd>
-                    <a href="user/home?id={{item[0]}}">
-                        <img src="{{item[2]}}">
-                        <i>{{item[1]}}</i>
+                    <a href="user/home?id={{item.id}}">
+                        <img src="{{item.imageUrl}}">
+                        <i>{{item.name}}</i>
                     </a>
                 </dd>
                     {{# }); }}
@@ -82,8 +82,8 @@
             <dt class="fly-panel-title">近一月热门帖子</dt>
             {{# layui.each(d.data, function(index, item){ }}
             <dd>
-                <a href="posts/detail?id={{item[0]}}">{{item[1]}}</a>
-                <span><i class="iconfont">&#xe60c;</i> {{item[2]}}</span>
+                <a href="posts/detail?id={{item.id}}">{{item.title}}</a>
+                <span><i class="iconfont">&#xe60c;</i> {{item.replyCount}}</span>
             </dd>
             {{# }); }}
         </dl>
@@ -102,7 +102,7 @@
     function loadPosts(laytpl, laypage, pageNo, renderpager) {
         var type = $.getUrlParam('type');
         var search =$.getUrlParam('search');
-        $.get(quark_posts_get_api, {
+        $.get(community_posts_get_api, {
             pageNo: pageNo,
             length: 15,
             type: type,
@@ -141,7 +141,7 @@
         loadPosts(laytpl, laypage, 1, true);
 
         //获取新用户
-        $.get(quark_rank_users_api,function (data) {
+        $.get(community_rank_users_api,function (data) {
             var tpl = $("#user").html();
             laytpl(tpl).render(data,function (html) {
                 $("#users").html(html);
@@ -149,7 +149,7 @@
         });
 
         //获取热门帖子
-        $.get(quark_rank_posts_api,function (data) {
+        $.get(community_rank_posts_api,function (data) {
             var tpl = $("#hot").html();
             laytpl(tpl).render(data,function (html) {
                 $("#hots").html(html);

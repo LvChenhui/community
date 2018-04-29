@@ -12,15 +12,15 @@
 <div th:include="common/header::header"></div>
 <script id="user" type="text/html">
 <div class="fly-home">
-    <img src="{{d.data.user.icon}}" alt="">
+    <img src="{{d.data.user.imageUrl}}" alt="">
     <h1>
-        {{d.data.user.username}}
-        {{ d.data.user.sex == 0 ? ' <i class="iconfont icon-nan"></i>' : ''}}
-        {{ d.data.user.sex == 1 ? ' <i class="iconfont icon-nv"></i>' : ''}}
+        {{d.data.user.name}}
+        {{ d.data.user.gender == 0 ? ' <i class="iconfont icon-nan"></i>' : ''}}
+        {{ d.data.user.gender == 1 ? ' <i class="iconfont icon-nv"></i>' : ''}}
     </h1>
     <p class="fly-home-info">
         <!--<i class="iconfont icon-zuichun" title="飞吻"></i><span style="color: #FF7200;">67206飞吻</span>-->
-        <i class="iconfont icon-shijian"></i><span>{{d.data.user.initTime}} 加入</span>
+        <i class="iconfont icon-shijian"></i><span>{{d.data.user.createTime}} 加入</span>
     </p>
     <p class="fly-home-sign">{{d.data.user.signature}}</p>
 </div>
@@ -28,7 +28,7 @@
 <div class="main fly-home-main">
     <div class="layui-inline fly-home-jie">
         <div class="fly-panel">
-            <h3 class="fly-panel-title">{{d.data.user.username}} 最近的发帖</h3>
+            <h3 class="fly-panel-title">{{d.data.user.name}} 最近的发帖</h3>
             <ul class="jie-row" >
                 {{# layui.each(d.data.posts, function(index, item){ }}
                 <li>
@@ -54,7 +54,7 @@
     layui.use(['laytpl'],function () {
         var laytpl = layui.laytpl;
 
-        $.get(quark_user_detail_api+uid,function (data) {
+        $.get(community_user_detail_api+uid,function (data) {
             var user = $("#user").html();
             laytpl(user).render(data,function (html) {
                 $("#users").html(html);

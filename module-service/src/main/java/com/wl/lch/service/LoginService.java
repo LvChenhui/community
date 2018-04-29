@@ -1,5 +1,6 @@
 package com.wl.lch.service;
 
+import com.wl.lch.dto.UserEstherDetailDTO;
 import com.wl.lch.entity.Subscriber;
 
 public interface LoginService {
@@ -23,4 +24,6 @@ public interface LoginService {
     public String updateUser(String accountNumber, String username, String signature, String sex);
 
     public String uploadIcon(String accountNumber, String icon);
+
+    public UserEstherDetailDTO findUserDetail(int userId);
 }

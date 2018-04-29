@@ -219,4 +219,12 @@
     from community_mi_user
     where name = #{name,jdbcType=VARCHAR}
   </select>
+  <select id="selectNewUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from community_mi_user
+    WHERE DATE_FORMAT(create_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    order by create_time DESC
+    limit 0,12
+  </select>
 </mapper>

@@ -85,7 +85,7 @@
                 layer.msg("两次不密码一致",{icon:7});
                 return false;
             }
-            $.post(quark_register_api, data.field,
+            $.post(community_register_api, data.field,
                 function (data) {
                     if (data.status == 200) {
 //                        location.href = "/user/login";
