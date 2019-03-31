@@ -1,6 +1,7 @@
 # community
 	community for study
 	本项目偏后端练习运用。
+> 使用前请先导入community.sql
 
 ## 作品功能用途：
 **用户模块**：具有邮箱注册，登录，修改密码，上传头像，添加和修改个人资料等功能。<br>
